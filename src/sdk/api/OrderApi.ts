@@ -3,15 +3,31 @@ import { CreateOrder } from '@/model/order';
 import Proxy from '../common/Proxy';
 export class OrderApi extends WSAPI {
   // @Proxy('Message')
+  // createOrder (order: CreateOrder) {
+  //   return this.instance.post(
+  //     this.apiPath + '/order',
+  //     order).then((result) => {
+  //     // console.log(result.data);
+  //     return result.data;
+  //   });
+  // }
   createOrder (order: CreateOrder) {
     return this.instance.post(
-      this.apiPath + '/order',
+      this.apiPath + '/DefaultOrder/CreateDefaultOrder',
       order).then((result) => {
       // console.log(result.data);
       return result.data;
-      // return { Message: new Message(result.data.Message, result.data.ReturnValue, result.data.Succeeded) };
     });
   }
+  UploadFile (param) {
+    return Promise.resolve(this.apiPath + '/FileUpload/UploadFile');
+  }
+  SaveOffLinePay (pas: object) {
+    return this.instance.post(this.apiPath + '/Pay/SaveOffLinePay',
+      pas).then((result) => {
+      return result.data;
+    });
+  };
   @Proxy('Order')
   getOrder (id: string) {
     return this.instance.get(this.apiPath + '/Order/GetOrder', { params: { id: id } }).then((result) => {
@@ -22,6 +38,12 @@ export class OrderApi extends WSAPI {
   @Proxy('PromotionDiscount')
   getPromotionCodeFrontView (code) {
     return this.instance.get(this.apiPath + '/Order/GetPromotionCodeFrontView', { params: { code: code } }).then((result) => {
+      if (result.data.Code === 0) { return result.data.ReturnValue; } else { throw new Error(result.data.Message); };
+    });
+  };
+  @Proxy('PromotionDiscount')
+  getPromotionCodeFrontView2 (exCond: any) {
+    return this.instance.post(this.apiPath + '/promotion/GetPromotionCodeFrontViewV2', exCond).then((result) => {
       if (result.data.Code === 0) { return result.data.ReturnValue; } else { throw new Error(result.data.Message); };
     });
   }

@@ -30,10 +30,18 @@ export default class Payment {
     public set Name (v : string) {
       this._Name = v;
     }
-    constructor (_Code:string = '', _Id:number = 0, _Img:string = '', _Name:string = '') {
+    private _Desc : string;
+    public get Desc () : string {
+      return this._Desc;
+    }
+    public set Desc (v : string) {
+      this._Desc = v;
+    }
+    constructor (_Code:string = '', _Id:number = 0, _Img:string = '', _Name:string = '', _Desc:string = '') {
       this._Code = _Code;
       this._Id = _Id;
       this._Img = _Img;
       this._Name = _Name;
+      this._Desc = _Desc;
     }
 }

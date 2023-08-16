@@ -6,8 +6,11 @@ export class MemberResult {
     LastName!: string;
     Mobile!: string;
     BirthMD!: string;
+    BirthDate!: string;
+    BirthDateString!: string;
     Language!: string ;
     Gender!:string;
+    MemberId!:string;
     private _Message: string;
     public get Message (): string {
       return this._Message;
@@ -23,6 +26,7 @@ export class MemberResult {
       this._Code = v;
     }
     constructor (
+      MemberId: string = '',
       Email: string = '',
       Password: string = '',
       ConfirmPassword: string = '',
@@ -30,9 +34,12 @@ export class MemberResult {
       LastName: string = '',
       Mobile: string = '',
       BirthMD: string = '',
-      Language: string = '',
-      Gender:string = ''
+      BirthDate: string = '',
+      BirthString: string = '',
+      Language: string = '0',
+      Gender:string = '0'
     ) {
+      this.MemberId = MemberId;
       this.Email = Email;
       this.Password = Password;
       this.ConfirmPassword = ConfirmPassword;
@@ -42,6 +49,8 @@ export class MemberResult {
       this.BirthMD = BirthMD;
       this.Language = Language;
       this.Gender = Gender;
+      this.BirthDate = BirthDate;
+      this.BirthDateString = BirthString;
       this._Message = '';
       this._Code = '';
     }

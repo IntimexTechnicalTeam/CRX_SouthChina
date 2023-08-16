@@ -46,7 +46,7 @@ export class MessageApi extends WSAPI {
   };
 
   // 標記指定的消息為已讀狀態
-  markedMessageAsRead (msgIdLst: string, callback: Function) {
+  markedMessageAsRead (msgIdLst: string) {
     return this.instance.post(this.apiPath + '/Message/MarkedMessageAsRead', { MsgIds: msgIdLst }).then((result) => {
       return result;
     });

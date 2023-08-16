@@ -52,7 +52,14 @@ export default class Order {
     public set PaymentMethod (v : string) {
       this._PaymentMethod = v;
     }
-    constructor (_CreateAt:string = '', _InvoiceNO:string = '', _DeliveryCharge:number = 0, _ItemsAmount = 0, _StatusName = '', _TotalAmount = 0, _PaymentMethod = '') {
+    private _OffLinePay : boolean;
+    public get OffLinePay () : boolean {
+      return this._OffLinePay;
+    }
+    public set OffLinePay (v : boolean) {
+      this._OffLinePay = v;
+    }
+    constructor (_CreateAt:string = '', _InvoiceNO:string = '', _DeliveryCharge:number = 0, _ItemsAmount = 0, _StatusName = '', _TotalAmount = 0, _PaymentMethod = '', _OffLinePay:boolean = false) {
       this._CreateAt = _CreateAt;
       this._InvoiceNO = _InvoiceNO;
       this._DeliveryCharge = _DeliveryCharge;
@@ -60,6 +67,7 @@ export default class Order {
       this._StatusName = _StatusName;
       this._TotalAmount = _TotalAmount;
       this._PaymentMethod = _PaymentMethod;
+      this._OffLinePay = _OffLinePay;
     }
 }
 export class CreateOrder {
@@ -73,7 +81,14 @@ export class CreateOrder {
     ExpressPointId : string;
     PickupPhone: string;
     PickupName : string;
-    constructor (_AddressId:number, _ExpressId:string, _PaymentMethod:number, _DeliverType:string = 'D', _PickupDate:string = '', _PickupTime:string = '', _PickupPhone = '', _PickupName = '', _PromotionCode:string = '', _ExpressPointId:string = '') {
+    CouponIds : string[];
+    TimeRangeId: string;
+    DeliveryDate: string;
+    Remark: string;
+    PickupAddressPhone: string;
+    PickupAddress: string;
+    PickupCompanyName: string;
+    constructor (_AddressId:number, _ExpressId:string, _PaymentMethod:number, _DeliverType:string = 'D', _PickupDate:string = '', _PickupTime:string = '', _PickupPhone = '', _PickupName = '', _PromotionCode:string = '', _TimeRangeId:string = ' ', _DeliveryDate:string = '', _Remark:string = '', _ExpressPointId:string = '', _PickupAddress:string = '', _PickupAddressPhone:string = '', _PickupCompanyName:string = '', _Coupons:string[] = []) {
       this.AddressId = _AddressId;
       this.ExpressId = _ExpressId;
       this.PaymentMethod = _PaymentMethod;
@@ -84,5 +99,12 @@ export class CreateOrder {
       this.PickupName = _PickupName;
       this.PromotionCode = _PromotionCode;
       this.ExpressPointId = _ExpressPointId;
+      this.CouponIds = _Coupons;
+      this.TimeRangeId = _TimeRangeId;
+      this.DeliveryDate = _DeliveryDate;
+      this.Remark = _Remark;
+      this.PickupAddressPhone = _PickupAddressPhone;
+      this.PickupAddress = _PickupAddress;
+      this.PickupCompanyName = _PickupCompanyName;
     }
 }

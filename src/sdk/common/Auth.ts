@@ -1,15 +1,12 @@
 import axios from 'axios';
 import storage from './Storage';
 import Cookie from 'js-cookie';
-import { ApiVersion, ApiServer, Authorization } from './SysConst';
-
-const PMServer: string = ApiServer;
-
+import { ApiVersion, Authorization, ApiServer } from './SysConst';
 axios.defaults.headers = {
   'Content-Type': 'application/json;charset=utf-8',
   Authorization: 'bearer ' + Cookie.get('access_token')// storage.get('access_token')
 };
-axios.defaults.baseURL = PMServer;
+axios.defaults.baseURL = ApiServer;
 
 class Auth {
   private GetAuth (): Promise<string> {
@@ -19,10 +16,8 @@ class Auth {
         .get(url, {
           params: {},
           headers: {
-            Authorization: 'Basic ' + Authorization
-            // 'Basic OTJjZjNiNmUtYTU2NS00ZWQ5LTg1YzQtNWNmMGYwNzIyZTZlOjU0Y2NhZmViLTA1ZmQtNDA3MS04YzgwLWJlMTM1MGI5ZWMyNA==' // CMX4.0
-            // 'Basic MzBhMzBiNTAtMTlkYy00NGM3LWFkY2MtZWI5OTk2ZGEyMWQ0OmE5NTQ0OTI1LWIwNWItNGUwYS04MDZhLTZkNGMzMjQ2ZWQ5OQ==' // edtoys
-            // Y2IwOWM4YWYtZDViYi00NDUyLWFhYTEtYmRlMDlkMmM4ZDdjOjY1MmNiNzBkLTNlYzYtNGQwZi1hZWY1LTBkNmEwZWJmNzhhMQ==   //newace
+            Authorization:
+              'Basic ' + Authorization // edtoys
           }
         })
         .then(
@@ -93,6 +88,7 @@ class Auth {
             if (!result) {
               // storage.remove('access_token');
               Cookie.remove('access_token');
+              storage.set('isLogin', 0);
               resolve(false);
             } else {
               storage.set(
@@ -102,7 +98,7 @@ class Auth {
               resolve(true);
             }
           },
-          function () {}
+          function () { }
         );
     });
     return pms;

@@ -20,7 +20,6 @@ export class CalendarApi extends WSAPI {
       return result.data;
     });
   }
-
   private static instance: CalendarApi;
   //* * 单例 */
   public static getInstance (): CalendarApi {

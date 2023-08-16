@@ -24,6 +24,14 @@ export default class YouWouldLike {
     this._Img = v;
   }
 
+  private _Img_L : string = '';
+  public get Img_L () : string {
+    return this._Img_L;
+  }
+  public set Img_L (v : string) {
+    this._Img_L = v;
+  }
+
   // private _AdditionalImage : string[];
   // public get AdditionalImage() : string[] {
   //   return this._AdditionalImage;
@@ -61,6 +69,21 @@ export default class YouWouldLike {
     this._SalePrice = v;
   }
 
+  private _DefaultListPrice : string = '';
+  public get DefaultListPrice () : string {
+    return this._DefaultListPrice;
+  }
+  public set DefaultListPrice (v : string) {
+    this._DefaultListPrice = v;
+  }
+
+  private _DefaultSalePrice : string = '';
+  public get DefaultSalePrice () : string {
+    return this._DefaultSalePrice;
+  }
+  public set DefaultSalePrice (v : string) {
+    this._DefaultSalePrice = v;
+  }
   private _Currency : Currency = new Currency();
   public get Currency () : Currency {
     return this._Currency;
@@ -68,7 +91,34 @@ export default class YouWouldLike {
   public set Currency (v : Currency) {
     this._Currency = v;
   }
-
+  private _DefaultCurrency : Currency = new Currency();
+  public get DefaultCurrency () : Currency {
+    return this._DefaultCurrency;
+  }
+  public set DefaultCurrency (v : Currency) {
+    this._DefaultCurrency = v;
+  }
+  private _IsFavorite : boolean = false;
+  public get IsFavorite () : boolean {
+    return this._IsFavorite;
+  }
+  public set IsFavorite (v : boolean) {
+    this._IsFavorite = v;
+  }
+  private _HasStockAttrVal : boolean = false;
+  public get HasStockAttrVal () : boolean {
+    return this._HasStockAttrVal;
+  }
+  public set HasStockAttrVal (v : boolean) {
+    this._HasStockAttrVal = v;
+  }
+  private _negotiable : boolean = false;
+  public get negotiable () : boolean {
+    return this._negotiable;
+  }
+  public set negotiable (v : boolean) {
+    this._negotiable = v;
+  }
   public virtual: boolean = false;
   constructor (
     id: any,
@@ -78,9 +128,15 @@ export default class YouWouldLike {
     primePrice: string = '',
     presentPrice: string = '',
     currency: Currency = new Currency(),
-    virtual: boolean = false
+    DefaultListPrice: string = '',
+    DefaultSalePrice: string = '',
+    DefaultCurrency: Currency = new Currency(),
+    virtual: boolean = false,
+    IsFavorite: boolean = false,
+    HasStockAttrVal: boolean = false,
+    negotiable: boolean = false
   ) {
-    if (typeof id === 'string') { this._constructorDefault(id, src, title, productCode, primePrice, presentPrice, currency, virtual); } else if (typeof src === 'object') { this._constructorArray(src); }
+    if (typeof id === 'string') { this._constructorDefault(id, src, title, productCode, primePrice, presentPrice, currency, DefaultListPrice, DefaultSalePrice, DefaultCurrency, virtual, IsFavorite, HasStockAttrVal, negotiable); } else if (typeof src === 'object') { this._constructorArray(src); }
   }
   _constructorDefault (
     id: string,
@@ -90,7 +146,14 @@ export default class YouWouldLike {
     primePrice: string = '',
     presentPrice: string = '',
     currency: Currency = new Currency(),
-    virtual: boolean = false) {
+    DefaultListPrice: string = '',
+    DefaultSalePrice: string = '',
+    DefaultCurrency: Currency = new Currency(),
+    virtual: boolean = false,
+    IsFavorite: boolean = false,
+    HasStockAttrVal: boolean = false,
+    negotiable: boolean = false
+    ) {
     this._Sku = id;
     this._Image = src;
     this._Img = src;
@@ -99,7 +162,14 @@ export default class YouWouldLike {
     this._ListPrice = primePrice;
     this._SalePrice = presentPrice;
     this._Currency = currency;
+    this._DefaultListPrice = DefaultListPrice;
+    this._DefaultSalePrice = DefaultSalePrice;
+    this._DefaultCurrency = DefaultCurrency;
     this.virtual = virtual;
+    this._Img_L = src;
+    this.IsFavorite = IsFavorite;
+    this.HasStockAttrVal = HasStockAttrVal;
+    this.negotiable = negotiable;
   }
   _constructorArray (item:any) {
     if (item.id === undefined || item.src === undefined || item.title === undefined || item.productCode === undefined || item.primePrice === undefined || item.presentPrice === undefined) { throw new Error('params error : class YouWouldLike must contains src,title,productCode,primePrice,presentPrice,virtual'); }
@@ -112,5 +182,7 @@ export default class YouWouldLike {
     this._SalePrice = item.presentPrice;
     this._Currency = item.currency;
     this.virtual = item.virtual;
+    this.IsFavorite = item.IsFavorite;
+    this._Img_L = item.src;
   }
 }

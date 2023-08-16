@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import i18n from '@/lang';
 import store from './store';
-import InsInform from '@/components/base/InsInform.vue';
-import InsNotice from '@/components/base/InsNotice.vue';
-import InsConfirm from '@/components/base/InsConfirm.vue';
+import InsInform from '@/components/base/pc/InsInform.vue';
+import InsNotice from '@/components/base/pc/InsNotice.vue';
+import InsConfirm from '@/components/base/pc/InsConfirm.ts';
 import InsLayer from '@/components/service/InsLayer.vue';
 import InstoreSdk from './sdk/InstoreSdk';
-// import InLogin from '@/components/business/pc/login/InsLoginFlow.ts';
+import InLogin from '@/components/business/pc/login/InsLoginFlow.ts';
 import storage from '@/sdk/common/Storage';
+import language from '@/lang/index';
 import { FrontE } from '@/sdk/common/SysConst';
 import { LoadScript } from './assets/scripts/common';
 const util = {
@@ -80,8 +81,7 @@ const util = {
 
     let instance = new InsConfirm({
       data: options,
-      i18n,
-      store
+      i18n
     }).$mount();
     document.body.appendChild(instance.$el);
     Vue.nextTick(() => {
@@ -156,26 +156,47 @@ const util = {
     if (this.layer instanceof InsLayer) {
       return this.layer;
     } else {
-      this.layer = new InsLayer({ data: { show: true }, store }).$mount();
+      this.layer = new InsLayer({ data: { show: true } }).$mount();
       el.appendChild(this.layer.$el);
       return this.layer;
     }
   },
   login: undefined as any,
-  // Login: function (rollback, ...params) {
-  //   if (this.login) this.login.showL();
-  //   else {
-  //     this.login = new InLogin({ i18n, store }).$mount();
-  //     document.body.appendChild(this.login.$el);
-  //   }
-  //   this.login.setRollback(rollback, params);
-  //   this.login.showL();
-  // },
+  Login: function (rollback, ...params) {
+    if (this.login) this.login.showL();
+    else {
+      this.login = new InLogin({ i18n, store }).$mount();
+      document.body.appendChild(this.login.$el);
+    }
+    this.login.setRollback(rollback, params);
+    this.login.showL();
+  },
+  LoginClose: function () {
+    if (this.login) this.login.hidden();
+  },
   delay: 0,
   Shake (fn, d) {
     if (!(fn instanceof Function)) return;
-    let timeout = d || 1000;
+    let timeout = d || 200;
     if (this.delay === 0) { this.delay = setTimeout(fn, timeout); } else { clearTimeout(this.delay); this.delay = setTimeout(fn, timeout); }
+  },
+  CheckMemberInfo (member) {
+    if (!member) return;
+    let keys = Object.keys(member);
+    let lang = Vue.prototype.$Storage.get('locale');
+    for (let index = 0; index < keys.length; index++) {
+      const element = keys[index];
+      if (element.match(/(FirstName)|(LastName)|(Mobile)|(BirthDate)/) && !member[element]) {
+        // util.Shake(() => {
+        //   Vue.prototype.$notify({
+        //     title: (language.messages[lang].Message as any).Message,
+        //     dangerouslyUseHTMLString: true,
+        //     message: '<strong>' + (language.messages[lang].Message as any).MemberInfo + '</strong>'
+        //   });
+        // }, 2000);
+        break;
+      }
+    }
   },
   install: function (Vue) {
     Vue.prototype.$Inform = util.info;
@@ -188,24 +209,31 @@ const util = {
     Vue.prototype.$Api = InstoreSdk.api;
     Vue.prototype.$SingtonConfirm = util.singtonConfirm;
     Vue.prototype.$ClearSingtonConfirm = util.clearSingtonConfirm;
+    Vue.prototype.$Login = util.Login;
+    Vue.prototype.$LoginClose = util.LoginClose;
     Vue.prototype.$Storage = storage;
     Vue.prototype.Shake = util.Shake;
     Vue.prototype.FrontE = FrontE;
+    Vue.prototype.CheckMemberInfo = util.CheckMemberInfo;
     // 掛載方法（引入外部js）到實例
     Vue.prototype.$LoadScript = LoadScript;
 
     Vue.prototype.Reload = function () {
       window.location.reload();
-      // if (this instanceof Vue) {
-      //   let path = this.$route.path;
-      //   // eslint-disable-next-line no-unused-expressions
-      //   setTimeout(() => { this.$router.push('/none'); }, 100);
-      //   setTimeout(() => { this.$router.push(path); }, 500);
-      // } else {
-      //   let path = location.href.split(location.host)[1];
-      //   setTimeout(() => { Vue.prototype.root.$router.push('/none'); }, 100);
-      //   setTimeout(() => { Vue.prototype.root.$router.push(path); }, 500);
-      // }
+    };
+    Vue.prototype.priceFormat = function (num) {
+      let r = Number(num);
+      if (isNaN(r)) return 0;
+      let r0 = Math.floor(r * 100) / 100;
+      let r1 = String(r0).split('.');
+      let r2 = r1[0].split('').reverse();
+      let r3 = '';
+      for (let i = 0; i < r2.length; i++) {
+        if ((i) % 3 === 0 && i !== 0) r3 += (',' + r2[i]);
+        else r3 += r2[i];
+      }
+      r3 = r3.split('').reverse().join('');
+      return r1.length === 2 ? r3 + '.' + r1[1] : r3 + '.00';
     };
   }
 };

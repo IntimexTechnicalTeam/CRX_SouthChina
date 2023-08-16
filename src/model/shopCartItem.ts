@@ -89,6 +89,14 @@ export default class ShopCartItem {
       this._GrossWeight = v;
     }
 
+    private _DiscountVal : number;
+    public get DiscountVal () : number {
+      return this._DiscountVal;
+    }
+    public set DiscountVal (v : number) {
+      this._DiscountVal = v;
+    }
+
     private _Id : string;
     public get Id () : string {
       return this._Id;
@@ -122,8 +130,9 @@ export default class ShopCartItem {
     }
     constructor (_Attr1 = 1, _Attr2 = 1, _Attr3 = 1, _AttrName1 = '', _AttrName2 = '', _AttrName3 = '', _AttrTypeName1 = '', _AttrTypeName2 = '', _AttrTypeName3 = '', _CreateAt = '',
       _GrossWeight = 0,
+      _DiscountVal = 0,
       _Id = '',
-      _Product = new PanelDetail('', '', '', 0, 0, ''),
+      _Product = new PanelDetail('', '', '', '', 0, 0, 0, 0, '', '', '', ''),
       _PromotionRule = '',
       _Qty = 0) {
       this._Attr1 = _Attr1;
@@ -141,5 +150,6 @@ export default class ShopCartItem {
       this._Product = _Product;
       this._PromotionRule = _PromotionRule;
       this._Qty = _Qty;
+      this._DiscountVal = _DiscountVal;
     }
 }

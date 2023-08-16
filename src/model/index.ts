@@ -25,6 +25,7 @@ import Tab from './Tab';
 import YouWouldLike from './youWouldLike';
 import PromotionDiscount from './PromotionDiscount';
 import Catalogs from './Catalogs';
+import Coupon from './coupon';
 export default {
   Address: Address,
   BannerResult: BannerResult,
@@ -52,5 +53,6 @@ export default {
   Tab: Tab,
   YouWouldLike: YouWouldLike,
   PromotionDiscount: PromotionDiscount,
-  Catalogs: Catalogs
+  Catalogs: Catalogs,
+  Coupon: Coupon
 };

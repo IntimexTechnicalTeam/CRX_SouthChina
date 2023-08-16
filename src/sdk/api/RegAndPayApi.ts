@@ -1,4 +1,5 @@
 import { WSAPI } from './WSApi';
+
 export default class RegAndPayApi extends WSAPI {
   uploadMultiFile (file:any, callback:Function) {
     // instance 对象继承自WSAPI
@@ -68,7 +69,7 @@ export default class RegAndPayApi extends WSAPI {
     });
   }
 
-  // 嵌套单选跳出下一层问题
+    // 嵌套单选跳出下一层问题
   getPanel (id: string, callback: Function) {
     return this.instance.get(
       this.apiPath + '/RegNPay/GetPanel', { params: { id: id } }).then((result) => {

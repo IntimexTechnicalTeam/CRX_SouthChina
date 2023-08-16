@@ -32,8 +32,8 @@ export default function Proxy (...Types) {
             // let Element = Map[Element.replace('[', '').replace(']', '')]
             let resultList = [''];
             resultList.length = 0;
-            if (Array.isArray(result.Data) || Array.isArray(result)) {
-              (result.Data || result).forEach((e) => {
+            if (Array.isArray(result.Data) || Array.isArray(result) || Array.isArray(((result.ReturnValue && result.ReturnValue.Data) ? result.ReturnValue.Data : undefined))) {
+              (result.Data || ((result.ReturnValue && result.ReturnValue.Data) ? result.ReturnValue.Data : undefined) || result).forEach((e) => {
                 let resultD = new Current();
                 Object.keys(resultD).forEach((element) => {
                   element = element.replace('_', '');
@@ -64,8 +64,8 @@ export default function Proxy (...Types) {
               resultData[element] = (result.ReturnValue || result)[element];
             });
             resultListDifferentType[CurrentName] = resultData;
-          } else if (typeof Element === 'string') {
-            resultListDifferentType[Element] = result[Element];
+          } else if (ArgumentType(Element) === 'string') {
+            resultListDifferentType[Element] = (result.ReturnValue || result)[Element];
           }
         });
         return resultListDifferentType;
@@ -150,7 +150,7 @@ function ArgumentType (src:string) {
   try {
     JSON.parse(src);
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return 'string';
   }
   return 'object';

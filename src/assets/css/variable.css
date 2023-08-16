@@ -1,0 +1,9 @@
+.el-button--success {
+  color: #FFF;
+  background-color: #e46c0a;
+  border-color: #e46c0a;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #e46c0a !important;
+  color: #FFF;
+}

@@ -27,14 +27,6 @@ export default class PanelDetail {
   public set OverView (v : string) {
     this._OverView = v;
   }
-  private _Detail : string;
-  public get Detail () : string {
-    return this._Detail;
-  }
-  public set Detail (v : string) {
-    this._Detail = v;
-  }
-
   private _Specification : string;
   public get Specification () : string {
     return this._Specification;
@@ -42,7 +34,6 @@ export default class PanelDetail {
   public set Specification (v : string) {
     this._Specification = v;
   }
-
   private _Code : string;
   public get Code () : string {
     return this._Code;
@@ -64,6 +55,21 @@ export default class PanelDetail {
   public set SalePrice (v : number) {
     this._SalePrice = v;
   }
+  private _DefaultListPrice : number;
+  public get DefaultListPrice () : number {
+    return this._DefaultListPrice;
+  }
+  public set DefaultListPrice (v : number) {
+    this._DefaultListPrice = v;
+  }
+
+  private _DefaultSalePrice :number;
+  public get DefaultSalePrice () : number {
+    return this._DefaultSalePrice;
+  }
+  public set DefaultSalePrice (v : number) {
+    this._DefaultSalePrice = v;
+  }
   private _AttrList : ProductAttr[][];
   public get AttrList () : ProductAttr[][] {
     return this._AttrList;
@@ -84,7 +90,15 @@ export default class PanelDetail {
   }
   public set ProductStatus (v : number) {
     if (v === undefined || v === null) v = -1;
-    if (v === 0) { this.button = [new Button('addToCart', 'positive', 'large', 'addToCart'), new Button('buyNow', 'nagative', 'large', 'buy')]; } else if (v === 1) { this.button = [new Button('offSale', 'positive', 'large', 'offSale'), new Button('favorite', 'nagative', 'large', 'favorite')]; } else if (v === 2) { this.button = [new Button('SaleOut', 'positive', 'large', 'SaleOut'), new Button('favorite', 'nagative', 'large', 'favorite')]; } else if (v === 3) { this.button = [new Button('purchasing', 'positive', 'large', 'Purchasing'), new Button('notifyMe', 'nagative', 'large', 'notifyMe')]; }
+    if (v === 0) {
+      this.button = [new Button('addToCart', 'positive', 'large', 'addToCart'), new Button('buy', 'nagative', 'large', 'buy')];
+    } else if (v === 1) {
+      this.button = [new Button('offSale', 'positive', 'large', 'offSale')];
+    } else if (v === 2) {
+      this.button = [new Button('SaleOut', 'positive', 'large', 'SaleOut')];
+    } else if (v === 3) {
+      this.button = [new Button('purchasing', 'positive', 'large', 'Purchasing'), new Button('notifyMe', 'nagative', 'large', 'notifyMe')];
+    }
     this._ProductStatus = v;
   }
 
@@ -95,7 +109,13 @@ export default class PanelDetail {
   public set Currency (v : Currency) {
     this._Currency = v;
   }
-
+  private _DefaultCurrency : Currency = new Currency();
+  public get DefaultCurrency () : Currency {
+    return this._DefaultCurrency;
+  }
+  public set DefaultCurrency (v : Currency) {
+    this._DefaultCurrency = v;
+  }
   private _MinPurQty : number;
   public get MinPurQty () : number {
     return this._MinPurQty;
@@ -133,7 +153,6 @@ export default class PanelDetail {
   public set IsFavorite (v : boolean) {
     this._IsFavorite = v;
   }
-
   private _Score : number;
   public get Score () : number {
     return this._Score;
@@ -141,8 +160,66 @@ export default class PanelDetail {
   public set Score (v : number) {
     this._Score = v;
   }
+
+  private _UnitInfo : object;
+  public get UnitInfo () : object {
+    return this._UnitInfo;
+  }
+  public set UnitInfo (v : object) {
+    this._UnitInfo = v;
+  }
+  private _YoutubeLink : string;
+  public get YoutubeLink () : string {
+    return this._YoutubeLink;
+  }
+  public set YoutubeLink (v : string) {
+    this._YoutubeLink = v;
+  }
+  private _SoldOutAttrComboList : Catelog[];
+  public get SoldOutAttrComboList () : Catelog[] {
+    return this._SoldOutAttrComboList;
+  }
+  public set SoldOutAttrComboList (v : Catelog[]) {
+    this._SoldOutAttrComboList = v;
+  }
+  private _AttrComboImgList : Catelog[];
+  public get AttrComboImgList () : Catelog[] {
+    return this._AttrComboImgList;
+  }
+  public set AttrComboImgList (v : Catelog[]) {
+    this._AttrComboImgList = v;
+  }
+  private _Permission : string;
+  public get Permission () : string {
+    return this._Permission;
+  }
+  public set Permission (v : string) {
+    this._Permission = v;
+  }
+  private _negotiable : boolean;
+  public get negotiable () : boolean {
+    return this._negotiable;
+  }
+  public set negotiable (v : boolean) {
+    this._negotiable = v;
+  }
+
+  private _negotiateMinQty : number;
+  public get negotiateMinQty () : number {
+    return this._negotiateMinQty;
+  }
+  public set negotiateMinQty (v : number) {
+    this._negotiateMinQty = v;
+  }
+  private _CatPathName : string;
+  public get CatPathName () : string {
+    return this._CatPathName;
+  }
+  public set CatPathName (v : string) {
+    this._CatPathName = v;
+  }
   public button: Button[] = [];
-  constructor (sku:string, name:string, code:string, listPrice:number, salePrice:number, overView:string = '', Detail:string = '', Specification:string = '', attrList:ProductAttr[][] = [], extAttrList:ProductAttr[][] = [], productStatus:number = 3, currency:Currency = new Currency(), _MaxPurQty:number = 0, _MinPurQty:number = 1, _CatId = 0, _CatalogTree = [], _IsFavorite:boolean = false, _Score:number = 0) {
+  constructor (sku:string, name:string, code:string, Permission:string, listPrice:number, salePrice:number, DefaultListPrice:number, DefaultSalePrice:number, _YoutubeLink:string, overView:string = '', Specification:string = '', CatPathName:string, attrList:ProductAttr[][] = [], extAttrList:ProductAttr[][] = [], productStatus:number = 3, currency:Currency = new Currency(), DefaultCurrency:Currency = new Currency(), _MaxPurQty:number = 0, _MinPurQty:number = 1, _CatId = 0, _CatalogTree = [], _IsFavorite:boolean = false, _negotiable:boolean = false, _Score:number = 0, _negotiateMinQty:number = 0, _UnitInfo:object = {}, _SoldOutAttrComboList = [], _AttrComboImgList = []) {
     this._Name = name;
     this._Sku = sku;
     this._Code = code;
@@ -150,7 +227,6 @@ export default class PanelDetail {
     this._SalePrice = salePrice;
     this._ProductStatus = productStatus;
     this._OverView = overView;
-    this._Detail = Detail;
     this._Specification = Specification;
     this._AttrList = attrList;
     this._ExtAttrList = extAttrList;
@@ -160,6 +236,17 @@ export default class PanelDetail {
     this._CatId = _CatId;
     this._CatalogTree = _CatalogTree;
     this._IsFavorite = _IsFavorite;
+    this._negotiable = _negotiable;
     this._Score = _Score;
+    this._negotiateMinQty = _negotiateMinQty;
+    this._UnitInfo = _UnitInfo;
+    this._YoutubeLink = _YoutubeLink;
+    this._DefaultListPrice = DefaultListPrice;
+    this._DefaultSalePrice = DefaultSalePrice;
+    this._DefaultCurrency = DefaultCurrency;
+    this._SoldOutAttrComboList = _SoldOutAttrComboList;
+    this._AttrComboImgList = _AttrComboImgList;
+    this._Permission = Permission;
+    this._CatPathName = CatPathName;
   }
 }

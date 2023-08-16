@@ -37,38 +37,6 @@ export class PromotionApi extends WSAPI {
     return r;
   }
 
-  GetHeaderBannerBydevice (
-    page: string, isMobile: boolean
-  ): Promise<BannerResult[]> {
-    let _this = this;
-
-    let r = new Promise<BannerResult[]>((resolve, reject) => {
-      this.instance.get(_this.apiPath + '/Banner/GetHeaderBannerBydevice', {
-        params: {
-          page: page,
-          isMobile: isMobile
-        }
-      }).then(
-        function (response) {
-          let result:BannerResult[] = response.data;
-          // response.data.forEach(element => {
-          //   result.push(element);
-          // });
-          var sucess = response.data.Succeed;
-          if (result) {
-            resolve(result);
-          } else {
-            reject(new Error('获取banner失败!'));
-          }
-        },
-        function () {
-          reject(new Error('请求banner接口失败！'));
-        }
-      );
-    });
-    return r;
-  }
-
   getPromotionList (
     page: string
   ): Promise<PromotionResult[]> {
@@ -127,18 +95,6 @@ export class PromotionApi extends WSAPI {
       return result.data;
     });
   }
-
-  // 根据设备类型获取单个Promotion信息
-  @Proxy('Promotion')
-  GetPromotionByDevice (param) {
-    return this.instance.post(
-      this.apiPath + '/Banner/GetPromotionByDevice',
-      param
-    ).then((result) => {
-      return result.data;
-    });
-  }
-
   getAllCoupon (cond: any) {
     return this.instance.post(this.apiPath + '/Member/GetAllCoupon', cond).then((result) => {
       return result.data;
@@ -152,12 +108,6 @@ export class PromotionApi extends WSAPI {
     });
   };
 
-  getMenu () {
-    return this.instance.get(this.apiPath + '/Menu').then((result) => {
-      return result.data;
-    });
-  };
-
   // 获取首页的SEO信息
   GetHomeSeoData () {
     return this.instance.get(this.apiPath + '/seo/GetHomeSeoData').then((result) => {
@@ -165,6 +115,16 @@ export class PromotionApi extends WSAPI {
     });
   };
 
+  getMenu () {
+    return this.instance.get(this.apiPath + '/Menu').then((result) => {
+      return result.data;
+    });
+  };
+  getSeo (list) {
+    return this.instance.post(this.apiPath + '/seo/GetCMSSeoList', list).then((result) => {
+      return result.data;
+    });
+  };
   private static instance: PromotionApi;
   //* * 单例 */
   public static getInstance (): PromotionApi {

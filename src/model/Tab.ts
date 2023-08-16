@@ -1,3 +1,4 @@
+import lang from '@/lang';
 export default class Tab {
   // title!: string;
   action!: string[];
@@ -17,7 +18,7 @@ export default class Tab {
   }
   public set OverView (v : string) {
     this._OverView = v;
-    if (v) this.setTabs('OverView');
+    if (v) { this.setTabs('OverView'); this.setTabsName((lang.messages[lang.locale].product as any).overView as string); }
   }
 
   private _Specification : string;
@@ -26,7 +27,7 @@ export default class Tab {
   }
   public set Specification (v : string) {
     this._Specification = v;
-    if (v) this.setTabs('Specification');
+    if (v) { this.setTabs('Specification'); this.setTabsName((lang.messages[lang.locale].product as any).specification as string); }
   }
   private _Detail : string;
   public get Detail () : string {
@@ -34,15 +35,24 @@ export default class Tab {
   }
   public set Detail (v : string) {
     this._Detail = v;
-    if (v) this.setTabs('Detail');
+    if (v) { this.setTabs('Detail'); this.setTabsName((lang.messages[lang.locale].product as any).detail as string); }
   }
   private __Tabs : string[] = [];
   public get Tabs () : string[] {
     return this.__Tabs;
   }
-  private setTabs (name) {
+  public setTabs (name) {
     this.__Tabs.push(name);
   }
+
+  private __TabsName : string[] = [];
+  public get TabsName () : string[] {
+    return this.__TabsName;
+  }
+  public setTabsName (v) {
+    this.__TabsName.push(v);
+  }
+
   constructor (_OverView: string = '', _Specification: string = '', _Detail: string = '', action: string[] = []) {
     this._OverView = _OverView;
     this._Detail = _Detail;

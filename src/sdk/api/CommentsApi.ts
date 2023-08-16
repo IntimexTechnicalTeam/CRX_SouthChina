@@ -21,7 +21,7 @@ export class CommentsApi extends WSAPI {
     });
   }
   uploadImage (param) {
-    return Promise.resolve(this.apiHost + this.apiPath + '/FileUpload/UploadFile');
+    return Promise.resolve(this.apiPath + '/FileUpload/UploadFile');
   }
   private static instance: CommentsApi;
   //* * 单例 */

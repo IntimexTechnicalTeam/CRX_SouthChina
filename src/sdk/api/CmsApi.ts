@@ -42,6 +42,15 @@ export class CmsApi extends WSAPI {
     });
   };
 
+  getFromContentByCatId (catId: string, page:number, pageSize:number, IsMobile: boolean, sortName:string, sortOrder:string) {
+    return this.instance.post(this.apiPath + '/cms/GetFromContentByCatId',
+      { catId: catId, page: page, pageSize: pageSize, IsMobile: IsMobile, sortName: sortName, sortOrder: sortOrder }).then((result) => {
+      return result.data;
+    });
+  }
+  // getContentByDevice () {
+  //   return this.instance.get(this.apiPath + '/cms/GetContentByDevice', {});
+  // }
   getCatOtherContent (cond: any) {
     return this.instance.post(this.apiPath + '/cms/GetCategoryRelateContent',
       cond).then((result) => {
@@ -51,6 +60,13 @@ export class CmsApi extends WSAPI {
 
   getSubCatContents (cond: any) {
     return this.instance.post(this.apiPath + '/cms/GetSubCatContents',
+      cond).then((result) => {
+      return result.data;
+    });
+  };
+
+  getLastestContents (cond: any) {
+    return this.instance.post(this.apiPath + '/cms/GetLastestContents',
       cond).then((result) => {
       return result.data;
     });
@@ -99,20 +115,6 @@ export class CmsApi extends WSAPI {
       return result.data;
     });
   };
-
-  getCatDetailByKey (pas: CMSPager) {
-    return this.instance.get(this.apiPath + '/cms/GetCatByKey',
-      { params: pas }).then((result) => {
-      return result.data;
-    });
-  };
-  @Proxy('CMS')
-  getContentByDevice (params) {
-    return this.instance.post(this.apiPath + '/cms/GetContentByDevice', params).then((result) => {
-      return result.data;
-    });
-  }
-
   // 根据设备类型获取CMSCategory信息
   getCategoryByDevice (params) {
     let r = new Promise((resolve, reject) => {
@@ -130,7 +132,18 @@ export class CmsApi extends WSAPI {
     });
     return r;
   }
-
+  getCatDetailByKey (pas: CMSPager) {
+    return this.instance.get(this.apiPath + '/cms/GetCatByKey',
+      { params: pas }).then((result) => {
+      return result.data;
+    });
+  };
+  @Proxy('CMS')
+  getContentByDevice (params) {
+    return this.instance.post(this.apiPath + '/cms/GetContentByDevice', params).then((result) => {
+      return result.data;
+    });
+  }
   private static instance: CmsApi;
   //* * 单例 */
   public static getInstance (): CmsApi {

@@ -42,11 +42,11 @@ export default class Address {
       this._CountryCode = v;
     }
 
-    private _CountryId : string;
-    public get CountryId () : string {
+    private _CountryId : number;
+    public get CountryId () : number {
       return this._CountryId;
     }
-    public set CountryId (v : string) {
+    public set CountryId (v : number) {
       this._CountryId = v;
     }
 
@@ -179,13 +179,15 @@ export default class Address {
     }
 
     constructor (
+      _Country:Country = new Country(),
+      _Provinceo:Province = new Province(),
       _DeliveryId:number = 0,
       _Address:string = '',
       _City:string = '',
       _CityName:string = '',
       _CompanyName:string = '',
       _CountryCode:string = '',
-      _CountryId:string = '',
+      _CountryId:number = 0,
       _CountryName:string = '',
       _Default:boolean = false,
       _Email:string = '',
@@ -198,9 +200,7 @@ export default class Address {
       _Phone:string = '',
       _PostalCode:string = '',
       _Province:string = '',
-      _ProvinceName:string = '',
-      _Country:Country = new Country(),
-      _Provinceo:Province = new Province()) {
+      _ProvinceName:string = '') {
       this._Address = _Address;
       this._City = _City;
       this._CityName = _CityName;

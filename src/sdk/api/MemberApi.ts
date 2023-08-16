@@ -1,11 +1,11 @@
 import { WSAPI } from './WSApi';
-import storage from '../common/storage';
+import storage from '@/sdk/common/Storage';
 import Cookie from 'js-cookie';
 import { LoginResult } from '../../model/loginResult';
 import { MemberResult } from '../../model/memberResult';
 import Vue from 'vue';
 import Proxy from '@/sdk/common/Proxy';
-import store from '@/store';
+import lang from '@/lang';
 export class MemberApi extends WSAPI {
   login (
     account: string,
@@ -37,7 +37,8 @@ export class MemberApi extends WSAPI {
               Vue.prototype.$Api.shoppingCart.getShoppingCart();
               resolve(result);
             } else {
-              result.Message = '未知錯誤，登入失敗';
+              console.log(lang.messages);
+              result.Message = (lang.messages[storage.get('locale')].Login as any).Loginerror as string;
               reject(result);
             }
           },
@@ -50,7 +51,22 @@ export class MemberApi extends WSAPI {
     });
     return r;
   }
-
+  public fbLogin (id, key) {
+    return this.instance.post(this.apiPath + '/Member/FBLogin', { fbId: id, key: key }).then((res) => {
+      if (res.data.Succeeded) {
+        Cookie.set('access_token', res.data.ReturnValue.access_token);
+      }
+      return res;
+    });
+    // .then(async (response) => {
+    //   if (response.data.Succeeded) {
+    //     var token = response.data.ReturnValue;
+    //     storage.set('access_token', token.access_token);
+    //     let memberInfo = await this.instance.get('/Account/GetMemberInfo');
+    //     return memberInfo;
+    //   }
+    // });
+  }
   logout (): Promise<any> {
     let _this = this;
     let r = new Promise<any>((resolve, reject) => {
@@ -80,23 +96,16 @@ export class MemberApi extends WSAPI {
      * @param callback
      */
   // MemberResult
-  register (data: object): Promise<any> {
-    // return this.instance.post(this.apiPath + '/Member/Register', data).then((result) => {
-    //   return result.data;
-    // });
-
-    let r = new Promise<any>((resolve, reject) => {
-      this.instance.post(this.apiPath + '/Member/Register', data).then((result) => {
-        if (result.data.Succeeded) {
-          resolve(result.data);
-        } else {
-          reject(result.data.Message);
-        }
-      });
+  register (data: object) {
+    return this.instance.post(this.apiPath + '/Member/Register', data).then((result) => {
+      return result.data;
     });
-    return r;
   };
-
+  updatePwdFM (id, code, password) {
+    return this.instance.get(this.apiPath + '/Member/UpdatePwdFM', { params: { id: id, code: code, password: password } }).then(result => {
+      return result.data;
+    });
+  }
   getAccount (): Promise<any> {
     let _this = this;
     let r = new Promise<any>((resolve, reject) => {
@@ -130,6 +139,26 @@ export class MemberApi extends WSAPI {
     });
     return r;
   }
+  //   MemberApi.prototype.fbLogin = function (id, key, callback) {
+  //     var _this = this;
+  //     WSPost(this.apiPath + "/Member/FBLogin", { fbId: id, key: key }, function (data, status) {
+  //         _this.log(data);
+  //         if (status === "success") {
+  //             if (data.Succeeded) {
+  //                 var token = data.ReturnValue;
+  //                 setCookie("access_token", token.access_token, "/", 1);
+  //                 WSGet("/Account/GetMemberInfo", null, function () {
+  //                     if (callback) {
+  //                         callback(data);
+  //                     }
+  //                 });
+  //             }
+  //             if (callback) {
+  //                 callback(data);
+  //             }
+  //         }
+  //     });
+  // };
   getProfile (): Promise<any> {
     let _this = this;
     let r = new Promise<any>((resolve, reject) => {
@@ -142,6 +171,7 @@ export class MemberApi extends WSAPI {
 
           if (sucess) {
             // storage.set('logined', '1');
+            Vue.prototype.CheckMemberInfo(result);
             resolve(result);
           } else {
             // storage.set('logined', '0');
@@ -163,28 +193,23 @@ export class MemberApi extends WSAPI {
     });
     return r;
   }
-  @Proxy('MemberResult')
-  getProfile2 () {
+  // @Proxy('MemberResult')
+  getProfile2 (): Promise<any> {
     return this.instance.get(this.apiPath + '/Member/GetProfile', {
     }).then((result) => {
-      return result.data;
+      // return result.data;
+      let member = new MemberResult();
+      if (result.data.Code === 1) {
+        Object.keys(member).forEach((element) => {
+          element = element.replace('_', '');
+          member[element] = result.data.ReturnValue[element];
+        });
+        return Promise.resolve({ MemberResult: member });
+      } else {
+        return Promise.reject(result.data.Message);
+      }
     });
   }
-  // getProfile2 () {
-  //   return this.instance.get(this.apiPath + '/Member/GetProfile', {
-  //   }).then((result) => {
-  //     let member = new MemberResult();
-  //     if (result.data.Code === 1) {
-  //       Object.keys(member).forEach((element) => {
-  //         element = element.replace('_', '');
-  //         member[element] = result.data.ReturnValue[element];
-  //       });
-  //       return { MemberResult: member };
-  //     } else {
-  //       return Promise.reject(result.data.Message);
-  //     }
-  //   });
-  // }
   // 此处被MAX由Object[]改为any
   updateProfile (model: object): Promise<any> {
     let _this = this;
@@ -217,12 +242,10 @@ export class MemberApi extends WSAPI {
     let r = new Promise<[]>((resolve, reject) => {
       this.instance.post(this.apiPath + '/Member/UpdatePassword', profile).then(
         function (response) {
-          _this.log(response.data, 'mimamima111');
           let result = response.data;
           var data = response.data;
           var sucess = response.data.Succeeded;
           if (result) {
-            console.log(response.data.Succeeded, 'mimamima2222');
             result.Message = data.Message;
             resolve(result);
           } else {
@@ -253,8 +276,10 @@ export class MemberApi extends WSAPI {
             if (success) {
               resolve(result);
             } else {
-              result.Message = '没有找到此邮箱，请重新输入！';
-              reject(result);
+              // eslint-disable-next-line
+                result.Message = lang.messages[storage.get('locale')].Input['emailNotFound'];
+              // eslint-disable-next-line
+                reject(result);
             }
           },
           function () {
@@ -302,7 +327,7 @@ export class MemberApi extends WSAPI {
         return result.data;
       });
   }
-
+  @Proxy('Currency')
   setCurrency (cur: string) {
     return this.instance
       .get(this.apiPath + '/Member/SetCurrency', {
@@ -312,7 +337,18 @@ export class MemberApi extends WSAPI {
         return result.data;
       });
   }
-
+  /**
+   * 获取用户优惠券（）
+   * @param cond
+   * @param callback
+   */
+  @Proxy('[Coupon]', 'TotalRecord', 'TotalPage')
+  getActiveCoupon (cond: any) {
+    return this.instance.post(
+      this.apiPath + '/Member/GetActiveCoupon',
+      cond
+    ).then((result) => { return result.data; });
+  }
   private static instance: MemberApi;
   //* * 单例 */
   public static getInstance (): MemberApi {

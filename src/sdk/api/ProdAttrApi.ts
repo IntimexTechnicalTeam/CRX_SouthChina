@@ -7,7 +7,7 @@ export class ProdAttrApi extends WSAPI {
      * @param callback
      */
   getById (ps:object) {
-    return this.instance.get(this.apiPath + '/ProdAttr/GetAttribtueById', { params: ps }).then((result) => {
+    return this.instance.post(this.apiPath + '/ProdAttr/GetAttribtueById', ps).then((result) => {
       return result.data.ReturnValue;
     });
   };
