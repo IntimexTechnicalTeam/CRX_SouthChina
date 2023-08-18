@@ -128,7 +128,7 @@ export default class InsCatLayout1 extends Vue {
     ListData:any[]=[];
     BannerImg:string='';
     CateName:string='';
-    private SortOrder: string = 'desc';
+    private SortOrder: string = 'asc';
     private SortName: string = 'CreateDate'
     private waiting: boolean = true;
     catlayoutID: string='';

@@ -127,7 +127,7 @@ export default class InsCatLayout1 extends Vue {
     catlayoutKey: string = '';
     servicecontent: string='';
     private waiting: boolean = true;
-    private SortOrder: string = 'desc';
+    private SortOrder: string = 'asc';
     private SortName: string = 'CreateDate'
     NoImg:string='/images/pc/proddef.jpg';
     get cid () {
@@ -346,8 +346,8 @@ export default class InsCatLayout1 extends Vue {
   padding-bottom: 0;
 }
 .Normalcenter{
-  width: 90%;
-  margin: 1.5rem auto;
+  width: 94%;
+  margin: 1rem auto;
   margin-bottom: 0;
   position: relative;
   .NomralBg{

@@ -305,12 +305,13 @@ export default class DefaultHeader extends Vue {
         color: @base_color;
           &::before{
             content: '';
-            width: 100%;
+            width: 64px;
             height: 4px;
             background-color: #3c408e;
             position: absolute;
-            left: 0;
+            left: 50%;
             bottom: 0;
+            transform: translateX(-50%);
           }
       }
       &:hover{
@@ -318,12 +319,13 @@ export default class DefaultHeader extends Vue {
           color: @base_color;
           &::before{
             content: '';
-            width: 100%;
+            width: 64px;
             height: 4px;
             background-color: #3c408e;
             position: absolute;
-            left: 0;
+            left: 50%;
             bottom: 0;
+            transform: translateX(-50%);
           }
           .showIcon {
             display: inline-block;

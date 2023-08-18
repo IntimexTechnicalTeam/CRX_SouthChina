@@ -186,11 +186,13 @@ button {
 }
 
 .warper .Inner {
-    width: 1000px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     background: #fff;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .warper .Inner .left {

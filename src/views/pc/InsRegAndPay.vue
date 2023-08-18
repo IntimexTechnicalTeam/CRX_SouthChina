@@ -24,7 +24,16 @@ export default class InsRegAndPay extends Vue {
     getForm () {
       this.$Api.regAndPay.getHtml((this.formKey || this.$route.params.id), this.lang, false).then(result => {
         this.htmlString = result.HtmlString;
+        console.log(this.isLogin, 'isLogin');
+        if (result.IsLogin === true) {
+          if (this.isLogin === 0) {
+              this.$router.push('/account/login?returnurl=/CMS/content/' + this.$route.params.id);
+          } else {
+            this.$router.push('/CMS/content/' + this.$route.params.id);
+          }
+        }
         this.$nextTick(() => {
+          console.log(this.$route.params.id, 'this.$route.params.id');
           if (document.querySelectorAll('#Sign').length > 0) {
             this.Signer = new intimex.CanvasSigner('#NewSignCanvas', '#Signature', {
               color: '#58B63A',
@@ -37,6 +46,9 @@ export default class InsRegAndPay extends Vue {
           if (result.Title) document.title = result.Title;
         });
       });
+    }
+    get isLogin() {
+      return this.$store.state.isLogin;
     }
 
     created () {

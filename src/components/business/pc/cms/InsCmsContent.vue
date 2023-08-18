@@ -501,9 +501,16 @@ export default class InsCmsContent extends Vue {
           padding: 0;
           >div {
               margin-bottom: 20px;
+              width: 49%;
+              float: left;
+              &:nth-child(2n+1){
+                float: right;
+                margin-left: 2%;
+              }
           }
           .title {
               font-size: 1.4rem;
+              width: 100%;
           }
           .question {
               color: @base_color;

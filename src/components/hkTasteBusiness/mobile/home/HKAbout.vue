@@ -326,6 +326,11 @@ export default class PkLiveBox extends Vue {
         /deep/ p {
           font-size: 1.4rem;
           line-height: 2rem;
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          word-wrap: break-word;
         }
       }
     }

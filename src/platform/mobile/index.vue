@@ -8,7 +8,7 @@
       <ins-menu-layout />
     </ins-slide-menu>
     <div class="quote" v-if="routerPath!=='/'" :class="{'ENG' : $Storage.get('locale') === 'E'}">
-      <router-link to="#">
+      <router-link to="/cms/catDetail/40119">
         <span>{{$t('home.Quote')}}</span>
       </router-link>
     </div>

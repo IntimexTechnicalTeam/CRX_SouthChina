@@ -542,8 +542,8 @@ export default class InsCmsContent extends Vue {
   }
 }
 .CmsNormal{
-  width: 90%;
-  margin: 1.5rem auto;
+  width: 94%;
+  margin: 1rem auto;
   margin-bottom: 0;
   position: relative;
   .position{

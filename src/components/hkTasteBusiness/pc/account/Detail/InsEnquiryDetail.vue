@@ -274,7 +274,7 @@ GetPtxOrderMessage () {
     padding-bottom: 5px;
 }
 .colorStyle {
-    background: #ddd!important;
-    color: #333!important;
+    background: #3c408e!important;
+    color: #fff!important;
 }
 </style>

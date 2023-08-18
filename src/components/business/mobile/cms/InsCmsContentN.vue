@@ -75,8 +75,8 @@ export default class InsCmsContentN extends Vue {
   padding-bottom: 0;
 }
 .CmsNormal {
-  width: 90%;
-  margin: 1.5rem auto;
+  width: 94%;
+  margin: 1rem auto;
   margin-bottom: 0;
   display: flex;
   flex-wrap: wrap;

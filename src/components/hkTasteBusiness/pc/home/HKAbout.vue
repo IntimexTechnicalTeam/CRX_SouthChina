@@ -199,6 +199,9 @@ export default class PkLiveBox extends Vue {
     // alert(1);
     this.getForm();
   }
+  get isLogin() {
+      return this.$store.state.isLogin;
+    }
   getForm() {
     console.log(this.cmsKey, 'this.cmsKey');
     this.$Api.regAndPay
@@ -207,6 +210,13 @@ export default class PkLiveBox extends Vue {
         this.htmlString = result.HtmlString;
         this.FormTitle = result.Title;
         console.log(result, 'Form');
+        // if (result.IsLogin === true) {
+        //   if (this.isLogin === 0) {
+        //     this.$router.push('/account/login?returnurl=/CMS/content/' + this.$route.params.id);
+        //   } else {
+        //     this.$router.push('/CMS/content/' + this.$route.params.id);
+        //   }
+        // }
         this.$nextTick(() => {
           if (document.querySelectorAll('#Sign').length > 0) {
             this.Signer = new intimex.CanvasSigner(
@@ -312,6 +322,11 @@ export default class PkLiveBox extends Vue {
           line-height: 34px;
           text-align: justify;
           padding-right: 95px;
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          word-wrap: break-word;
         }
         .NormalTitle{
           justify-content: left;
@@ -926,10 +941,13 @@ export default class PkLiveBox extends Vue {
                   }
                   .only_tilte{
                       h4.control-label{
-                        font-size: 20px;
+                        font-size: 30px;
                         width: 100%;
                         text-align: center;
                         display: block;
+                        font-weight: bold;
+                        padding-left: 82px;
+                        box-sizing: border-box;
                       }
                     }
                 }

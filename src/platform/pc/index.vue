@@ -5,7 +5,7 @@
     <Footer v-show="routerPath!=='/building'"/>
     <Sidebar />
     <div class="quote" v-if="routerPath!=='/'">
-      <router-link to="#">
+      <router-link to="/cms/catDetail/40119">
         <span>{{$t('home.Quote')}}</span>
       </router-link>
     </div>
