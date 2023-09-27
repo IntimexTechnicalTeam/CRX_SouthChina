@@ -4,7 +4,7 @@
     <router-view></router-view>
     <Footer v-show="routerPath!=='/building'"/>
     <Sidebar />
-    <div class="quote" v-if="routerPath!=='/'">
+    <div class="quote" :class="{'ENG' : $Storage.get('locale') === 'E'}" v-if="routerPath!=='/'">
       <router-link to="/cms/catDetail/40119">
         <span>{{$t('home.Quote')}}</span>
       </router-link>
@@ -32,19 +32,34 @@ export default class pcIndex extends Vue {
 .quote{
     position: absolute;
     left: 1.5%;
-    bottom: 55px;
+    bottom: 0;
     width: 250px;
     height: 80px;
     background: url(/images/pc/arrow.png) 87% center #3c408e no-repeat;
     z-index: 100;
     span{
-      display: block;
+      display: flex;
+      align-items: center;
       width:78%;
       color: #fff;
       font-size: 24px;
+      // height: 80px;
       line-height: 80px;
       text-align: center;
       letter-spacing: 0.05em;
+      padding-left: 15px;
+      box-sizing: border-box;
+    }
+    &.ENG{
+      background: url(/images/pc/arrow.png) 92% center #3c408e no-repeat;
+      span{
+        width:80%;
+        color: #fff;
+        font-size: 22px;
+        height: 80px;
+        padding-left: 10px;
+        box-sizing: border-box;
+      }
     }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="ContainerMain" :class="{'ENG' : $Storage.get('locale') === 'E'}">
-    <div class="HomeAbout">
+    <div class="HomeAbout fade-in-hot">
 
       <div class="Content">
 
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="HomeService">
+    <div class="HomeService fade-in-hot">
       <div class="HomeServiceback">
         <div class="NormalTitle">
           <i class="left"></i><span class="center">{{ ServiceTitle }}</span
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="HomeBusinessScope">
+    <div class="HomeBusinessScope fade-in-hot">
       <div class="NormalTitle">
         <i class="left"></i><span class="center">{{ BusinessScopeTitle }}</span
         ><i class="right"></i>
@@ -60,7 +60,7 @@
               {{$t('home.Price')}}
             </div>
           </li>
-          <li v-for="(v, index) in BusinessScope" :key="index">
+          <li v-for="(v, index) in BusinessScope" :key="index" :class="{'active': v.Key === cmsKey}">
             <div class="Title">
               <p>{{ v.Title }}</p>
             </div>
@@ -81,10 +81,10 @@
         </div>
       </div>
     </div>
-    <div class="Supply">
+    <!-- <div class="Supply">
       <router-link class="img" to="/Enquiry/InsertBider"><img :src="supplier.Cover" width="100%"></router-link>
-    </div>
-    <div class="HKLiveBox">
+    </div> -->
+    <div class="HKLiveBox fade-in-hot">
       <div class="NormalTitle">
         <i class="left"></i><span class="center">{{ contactusname }}</span
         ><i class="right"></i>
@@ -98,7 +98,7 @@
 
       </div>
     </div>
-    <div class="hkmaps">
+    <div class="hkmaps fade-in-hot">
         <p v-html="IG" class="IG"></p>
     </div>
   </div>
@@ -270,6 +270,25 @@ export default class PkLiveBox extends Vue {
       this.getForm();
     }
   }
+  HotScroll () {
+    let fadeInElements = document.getElementsByClassName('fade-in-hot');
+    // console.log(document.getElementsByClassName('fade-in'), '滚动');
+    for (var i = 0; i < fadeInElements.length; i++) {
+      let elem = fadeInElements[i] as HTMLElement;
+      if (this.isElemVisible(elem)) {
+        elem.style.opacity = '1';
+        // elem.style.transform = 'translate(0, 0)';
+        // fadeInElements.splice(i, 1); // 只让它运行一次
+      }
+    }
+    // document.removeEventListener('scroll', this.handleScroll);
+  }
+  isElemVisible (el) {
+    var rect = el.getBoundingClientRect();
+    var elemTop = rect.top + 600; // 200 = buffer
+    var elemBottom = rect.bottom;
+    return elemTop < window.innerHeight && elemBottom >= 0;
+  }
   get lang() {
     return this.$Storage.get('locale');
   }
@@ -289,6 +308,11 @@ export default class PkLiveBox extends Vue {
     window['router'] = this.$router;
     // window['getPanel'] = this.$Api.getPanel;
     window['Elalert'] = this.$alert;
+    document.addEventListener('scroll', this.HotScroll);
+  }
+
+  destroyed () {
+    document.removeEventListener('scroll', this.HotScroll);
   }
 }
 </script>
@@ -642,6 +666,31 @@ export default class PkLiveBox extends Vue {
             // left: 0;
 
           }
+      }
+      li.active{
+        .Title::after{
+          content: '';
+          width: 200px;
+          height: 80px;
+          background-color: rgba(230, 199, 123, 0.6);
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        .text::after{
+          content: '';
+          width: 200px;
+          height: 150px;
+          background-color: rgba(230, 199, 123, 0.6);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+
+        }
+        .btn{
+          background-color: #3c408e;
+          color: #fff;
+        }
       }
     }
     }
@@ -1131,6 +1180,7 @@ export default class PkLiveBox extends Vue {
         /deep/ img {
           width: 100%;
         }
+
       }
 
     }
@@ -1139,6 +1189,9 @@ export default class PkLiveBox extends Vue {
     width: 100%;
     height: 400px;
     // overflow: hidden;
+    /deep/ iframe{
+      display: block;
+    }
   }
 }
 .ENG{
@@ -1179,5 +1232,13 @@ export default class PkLiveBox extends Vue {
       }
     }
   }
+}
+.home .ContainerMain .fade-in-hot {
+  opacity: 1;
+  transition: 1s all ease-out;
+  // transform: translate(0, -30px);
+  box-sizing: border-box;
+  // padding: 20px;
+  display: block;
 }
 </style>

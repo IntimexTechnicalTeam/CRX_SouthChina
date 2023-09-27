@@ -53,10 +53,10 @@
                   <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                       {{v.CaseCode}}
                   </li>
-                <li>
+                <!-- <li> -->
                   <!-- <router-link :to="'/account/EnquiryDetail/'+v.Id+'/0'">{{v.OrderCode}}</router-link> -->
-                  {{v.OrderCode}}
-                  </li>
+                  <!-- {{v.OrderCode}} -->
+                  <!-- </li> -->
                 <li>{{v.Subject}}</li>
                 <li>{{v.CaseStatusName}}</li>
                 <li>{{v.CreateDate}}</li>
@@ -86,10 +86,10 @@
                   <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                 {{v.CaseCode}}
                 </li>
-                <li>
+                <!-- <li> -->
                   <!-- <router-link :to="'/account/QuotaDetail/'+v.Id+'/0'">{{v.OrderCode}}</router-link> -->
-                  {{v.OrderCode}}
-                </li>
+                  <!-- {{v.OrderCode}} -->
+                <!-- </li> -->
                 <li>{{v.Subject}}</li>
                 <li>{{v.OrderTypeName}}</li>
                 <li>{{v.CaseStatusName}}</li>
@@ -120,10 +120,10 @@
                   <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                   {{v.CaseCode}}
                 </li>
-                <li>
+                <!-- <li> -->
                   <!-- <router-link :to="'/account/BuyOrderDetail/'+v.Id+'/0'">{{v.OrderCode}}</router-link> -->
-                  {{v.OrderCode}}
-                </li>
+                  <!-- {{v.OrderCode}} -->
+                <!-- </li> -->
                 <li>{{v.Subject}}</li>
                 <li>{{v.CreateDate}}</li>
                 <li>{{v.CaseStatusName}}</li>
@@ -154,10 +154,10 @@
                   <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                 {{v.CaseCode}}
                 </li>
-                <li>
+                <!-- <li> -->
                   <!-- <router-link :to="'/account/InviceInfoDetail/'+v.Id+'/0'">{{v.OrderCode}}</router-link> -->
-                  {{v.OrderCode}}
-                  </li>
+                  <!-- {{v.OrderCode}} -->
+                  <!-- </li> -->
                 <li>{{v.Subject}}</li>
                 <li>{{v.CreateDate}}</li>
                 <li>{{v.CaseStatusName}}</li>
@@ -188,11 +188,11 @@
                   <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                 {{v.CaseCode}}
                 </li>
-                <li>
+                <!-- <li> -->
                   <!-- <router-link :to="'/account/BuyOrderDetail/'+v.GoodOrderId+'/0'">{{v.OrderCode}}</router-link> -->
-                  {{v.OrderCode}}
-                  </li>
-                <li><router-link :to="'/account/DeliveryOrderDetail/'+v.Id">{{v.DeliveryCode}}</router-link></li>
+                  <!-- {{v.OrderCode}} -->
+                  <!-- </li> -->
+                <!-- <li><router-link :to="'/account/DeliveryOrderDetail/'+v.Id">{{v.DeliveryCode}}</router-link></li> -->
                 <li>{{v.Subject}}</li>
                 <li>{{v.CaseStatusName}}</li>
                 <li>{{v.CreateDate}}</li>
@@ -222,10 +222,10 @@
                     <!-- <router-link :to="'/account/CaseList/'+v.CaseId">{{v.CaseCode}}</router-link> -->
                     {{v.CaseCode}}
                     </li>
-                  <li>
+                  <!-- <li> -->
                     <!-- <router-link :to="'/account/PackingDetail/'+v.Id+'/0'">{{v.OrderCode}}</router-link> -->
-                    {{v.OrderCode}}
-                  </li>
+                    <!-- {{v.OrderCode}} -->
+                  <!-- </li> -->
                   <li>{{v.Subject}}</li>
                   <li>{{v.DeliveryDate}}</li>
                   <li>{{v.CaseStatusName}}</li>
@@ -574,6 +574,7 @@ export default class InsNotification extends Vue {
         }
         &:nth-child(3){
           width: 150px;
+          // display: none;
         }
         &:nth-child(4){
           width: 150px;
@@ -608,9 +609,11 @@ export default class InsNotification extends Vue {
         }
         &:nth-child(2){
           width: 150px;
+
         }
         &:nth-child(3){
           width: 150px;
+          display: none;
         }
         &:nth-child(4){
           width: 150px;

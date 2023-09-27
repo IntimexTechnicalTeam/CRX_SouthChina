@@ -1,5 +1,5 @@
 <template>
-  <div class="ContainerMain">
+  <div class="ContainerMain" :class="{'ENG' : $Storage.get('locale') === 'E'}">
     <div class="HomeAbout">
 
       <div class="NormalTitle">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <ul class="bottom">
-          <li class="fix" v-for="(v, index) in BusinessScope" :key="index">
+          <li class="fix" v-for="(v, index) in BusinessScope" :key="index" :class="{'active': v.Key === cmsKey}">
             <div class="Title">
               <p>{{ v.Title }}</p>
             </div>
@@ -493,6 +493,7 @@ export default class PkLiveBox extends Vue {
       ul.bottom{
         li{
           border-top: 1px solid #cccccc;
+          position: relative;
           .Title{
             width: 30%;
             height: 5rem;
@@ -508,6 +509,7 @@ export default class PkLiveBox extends Vue {
               font-size: 1.3rem;
               color: #333333;
               word-break: break-word;
+                  z-index: 100;
             }
           }
           .text{
@@ -524,10 +526,12 @@ export default class PkLiveBox extends Vue {
 
               width: 55%;
               float: left;
+                  z-index: 100;
               /deep/ p{
                 font-size: 1.3rem;
                 color: #333333;
                 text-align: center;
+                    z-index: 100;
               }
             }
             .btn{
@@ -546,6 +550,31 @@ export default class PkLiveBox extends Vue {
               float: left;
               text-align: center;
             }
+          }
+        }
+        li.active{
+          .Title::after{
+            content: '';
+            width: 100%;
+            height: 5rem;
+            background-color: rgba(230, 199, 123, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .text::after{
+            content: '';
+            width: 100%;
+            height: 5rem;
+            background-color: rgba(230, 199, 123, 0.6);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+          }
+          .btn{
+            background-color: #3c408e;
+            color: #fff;
           }
         }
       }
@@ -573,7 +602,7 @@ export default class PkLiveBox extends Vue {
             background-size: contain;
             top: 50%;
             transform: translateY(-50%);
-            right: 2rem;
+            right: 3rem;
           }
         }
         .btn.save {
@@ -588,6 +617,8 @@ export default class PkLiveBox extends Vue {
           font-weight: 500 !important;
           color: #fff;
           border-radius: 2rem;
+          text-align: left;
+          padding-left: 3.5rem;
         }
 
         #Anwers {
@@ -1033,6 +1064,32 @@ export default class PkLiveBox extends Vue {
           width: 100%;
         }
       }
+  }
+}
+.ENG{
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content .btn.save{
+    text-align: left;
+    padding-left: 2rem;
+    letter-spacing: 2px;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content .col-md-offset-2::after{
+    content: '';
+    right: 2rem;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content #Anwers .form-group:nth-child(5) .files{
+    width: 69%;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content #Anwers .form-group fieldset{
+    width: 69%;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content #Anwers .form-group .control-label{
+    width: 31%;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content #Anwers .form-group:nth-child(6) .radio_pay{
+    width: 69%;
+  }
+  &.ContainerMain .HomeBusinessScope .auditform .FormMain/deep/ #content #Anwers .only_tilte .control-label{
+    width: 100%;
   }
 }
 </style>

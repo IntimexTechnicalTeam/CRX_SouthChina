@@ -113,8 +113,8 @@ export default class InsMenberCenter extends Vue {
   background: @base_color !important;
 }
 .MembercenterMobile{
-  width: 90%;
-  margin: 1.5rem auto;
+  width: 94%;
+  margin: 1rem auto;
   margin-bottom: 0;
   padding-top: 3rem;
   background: url('/images/mobile/memberback.jpg') no-repeat bottom right;

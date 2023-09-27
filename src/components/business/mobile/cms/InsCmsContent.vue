@@ -36,16 +36,28 @@
     </div>
     <!-- 其他页面 -->
     <div class="CmsNormal" v-else>
-      <div class="Banner"><img :src="content.Cover"></div>
-      <div class="position">
-        <div class="NormalTitle">
-          <!-- <i class="left"></i> -->
-          <span class="center">{{ content.Title }}</span>
-          <!-- <i class="right"></i> -->
+      <div v-if="content.Cover">
+        <div class="Banner"><img :src="content.Cover"></div>
+        <div class="position">
+          <div class="NormalTitle">
+            <!-- <i class="left"></i> -->
+            <span class="center">{{ content.Title }}</span>
+            <!-- <i class="right"></i> -->
+          </div>
+          <!-- <div class="Location"><span class="HomeText">{{$t('Message.Home')}} > </span><span class="ColorText">{{ content.Title }}</span></div> -->
+          <div class="CmsContent">
+            <p v-html="content.Body" class="text"></p>
+          </div>
         </div>
-        <!-- <div class="Location"><span class="HomeText">{{$t('Message.Home')}} > </span><span class="ColorText">{{ content.Title }}</span></div> -->
-        <div class="CmsContent">
-          <p v-html="content.Body" class="text"></p>
+      </div>
+      <div v-else>
+        <div class="position Noposition">
+          <div class="NormalTitle">
+            <span class="center">{{ content.Title }}</span>
+          </div>
+          <div class="CmsContent">
+            <p v-html="content.Body" class="text"></p>
+          </div>
         </div>
       </div>
 
@@ -551,6 +563,10 @@ export default class InsCmsContent extends Vue {
     top: 3rem;
     left: 0;
   }
+  .Noposition{
+    position: sticky;
+    min-height: 40rem;
+  }
   /deep/.contactBox{
   width: 100%;
   text-align: center;
@@ -686,7 +702,7 @@ export default class InsCmsContent extends Vue {
             background-size: contain;
             top: 50%;
             transform: translateY(-50%);
-            right: 2rem;
+            right: 3rem;
           }
         }
         .btn.save {
@@ -701,6 +717,9 @@ export default class InsCmsContent extends Vue {
           font-weight: 500 !important;
           color: #fff;
           border-radius: 2rem;
+          text-align: left;
+          padding-left: 3rem;
+          letter-spacing: 2px;
         }
 
         #Anwers {
@@ -997,6 +1016,33 @@ export default class InsCmsContent extends Vue {
     align-items: center;
     }
   }
-
+  .Onlineaudit_box #Onlineaudit_Main/deep/ .RNPForm.default #content .btn.save{
+    letter-spacing: 2px;
+    text-align: left;
+    padding-left: 2rem;
+  }
+  .Onlineaudit_box #Onlineaudit_Main/deep/ .RNPForm.default #content .col-md-offset-2::after{
+    content: '';
+    right: 2rem;
+  }
+  .Onlineaudit_box #Onlineaudit_Main {
+    /deep/.RNPForm.default #content #Anwers {
+      .form-group .control-label{
+        width: 32%;
+      }
+      .form-group fieldset{
+        width: 68%;
+      }
+      .form-group:nth-child(5) .files{
+        width: 68%;
+      }
+      .form-group:nth-child(6) .radio_pay{
+        width: 68%;
+      }
+      .only_tilte .control-label{
+        width: 100%;
+      }
+    }
+  }
 }
 </style>

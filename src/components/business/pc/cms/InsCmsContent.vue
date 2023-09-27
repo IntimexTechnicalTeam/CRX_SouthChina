@@ -42,18 +42,33 @@
     </div>
     <!-- 其他页面 -->
     <div class="CmsNormal" v-else>
-      <div class="Banner" v-if="content.Cover">
-        <img :src="content.Cover">
-      </div>
-      <div class="position">
-        <div class="NormalTitle">
-          <!-- <i class="left"></i> -->
-          <span class="center">{{ content.Title }}</span>
-          <!-- <i class="right"></i> -->
+      <div v-if="content.Cover">
+        <div class="Banner" v-if="content.Cover">
+          <img :src="content.Cover">
         </div>
-        <!-- <div class="Location"><span class="HomeText">{{$t('Message.Home')}} > </span><span class="ColorText">{{ content.Title }}</span></div> -->
-        <div class="CmsContent">
-          <p v-html="content.Body" class="text"></p>
+        <div class="position">
+          <div class="NormalTitle">
+            <!-- <i class="left"></i> -->
+            <span class="center">{{ content.Title }}</span>
+            <!-- <i class="right"></i> -->
+          </div>
+          <!-- <div class="Location"><span class="HomeText">{{$t('Message.Home')}} > </span><span class="ColorText">{{ content.Title }}</span></div> -->
+          <div class="CmsContent">
+            <p v-html="content.Body" class="text"></p>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div class="position NOposition">
+          <div class="NormalTitle">
+            <!-- <i class="left"></i> -->
+            <span class="center">{{ content.Title }}</span>
+            <!-- <i class="right"></i> -->
+          </div>
+          <!-- <div class="Location"><span class="HomeText">{{$t('Message.Home')}} > </span><span class="ColorText">{{ content.Title }}</span></div> -->
+          <div class="CmsContent">
+            <p v-html="content.Body" class="text"></p>
+          </div>
         </div>
       </div>
 
@@ -106,6 +121,14 @@ export default class InsCmsContent extends Vue {
       console.log(result, 'getContent');
       this.getFromContentByCatId(result.CMS.CatId);
       this.contentKey = result.CMS.Key;
+
+      this.$nextTick(() => {
+        if (result.CMS.Title) document.title = result.CMS.Title;
+        (document.getElementsByName('keywords')[0] as any).content = result.CMS.SeoKeyword;
+        (document.getElementsByName('description')[0] as any).content = result.CMS.SeoDesc;
+        (document.getElementsByName('twitter:description')[0] as any).content = result.CMS.SeoDesc;
+        (document.getElementsByName('twitter:title')[0] as any).content = result.CMS.Title;
+      });
     });
   }
   getForm () {
@@ -203,13 +226,6 @@ export default class InsCmsContent extends Vue {
       });
     });
   }
-  getFileNameToText() {
-    // 获取上传控件domvar fileObj = this.$refs['upload'];
-    // 获取文件名var fileName = fileObj.files[0].name;
-    // 获取文件路径var filePath = fileObj.value;
-    // 将文件名载入文本框this.$refs['filePath'].value = fileName;console.log(fileName, 'fileName');console.log(filePath, 'filePath');
-
-  }
   created () {
     this.getContent();
     this.Regnay();
@@ -229,7 +245,7 @@ export default class InsCmsContent extends Vue {
 <style scoped lang="less">
 .PcContact {
   width: 100%;
-  display: inline-block;
+  display: block;
   // padding-bottom: 10rem;
   .Banner {
     width: 97%;
@@ -278,6 +294,7 @@ export default class InsCmsContent extends Vue {
           float: right;
         }
       }
+
       /deep/.contactBox{
   width: 100%;
   text-align: left;
@@ -594,6 +611,13 @@ export default class InsCmsContent extends Vue {
       left: 10%;
       top: 6%;
     }
+  .NOposition{
+    position: initial;
+    width: 1200px;
+    margin: 0 auto;
+    min-height: 600px;
+    margin-top: 30px;
+  }
   .CmsNormal{
     position: relative;
 
@@ -1043,6 +1067,17 @@ export default class InsCmsContent extends Vue {
     align-items: center;
     }
   }
+  .Onlineaudit_box .Onlineaudit_Main/deep/ .NomralBg .RNPForm.default .FormMain #content .btn.save{
+    padding: 0 20px;
+    text-align: left;
+    font-size: 20px;
+  }
+  .Onlineaudit_box .Onlineaudit_Main/deep/ .NomralBg .RNPForm.default .FormMain #content #Anwers .form-group:nth-child(6) .control-label{
+    width: 118px;
+  }
+  .Onlineaudit_box .Onlineaudit_Main/deep/ .NomralBg .RNPForm.default .FormMain #content #Anwers .form-group:nth-child(6) fieldset {
+    width: 67%;
+  }
   // .CmsContact .FormMain/deep/ #content #Anwers .form-group{
   //   .control-label{
   //     font-family: Arial !important;
@@ -1062,5 +1097,10 @@ export default class InsCmsContent extends Vue {
   // .CmsContent .text/deep/ p{
   //   font-family: Arial !important;
   // }
+}
+@media screen and (max-width: 1366px) {
+  .PcContact .Banner img{
+    min-height: calc(100vh - 104px);
+  }
 }
 </style>

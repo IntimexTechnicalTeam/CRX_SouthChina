@@ -53,7 +53,7 @@ export default class mobileIndex extends Vue {
 }
 .quote{
     position: absolute;
-    left: 5%;
+    left: 3%;
     bottom: 6rem;
     width: 15rem;
     height: 4.5rem;

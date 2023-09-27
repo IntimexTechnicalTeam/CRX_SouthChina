@@ -28,6 +28,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cookie from 'js-cookie';
+import { Message } from 'element-ui';
+import sdk from '@/sdk/InstoreSdk';
 @Component
 export default class InsLangSwitch extends Vue {
   private showMenberCentral:boolean = false;
@@ -67,6 +69,31 @@ export default class InsLangSwitch extends Vue {
       this.$router.push('/');
       this.Reload();
     });
+  }
+  getAccount () {
+     let _this = this;
+
+     sdk.api.member.getAccount().then(
+       function (data) {
+         if (data.Logined) {
+           _this.$store.dispatch('setUser', (data.FirstName + ' ' + data.LastName).toUpperCase());
+           _this.$store.dispatch('doLogin');
+         } else {
+           _this.$store.dispatch('Logout', true);
+         }
+       },
+       function (data) {
+         Message({
+           message: data,
+           type: 'error',
+           customClass: 'messageboxNoraml'
+         });
+       }
+     );
+   }
+  mounted() {
+    console.log(this.user, 'user');
+    this.getAccount();
   }
 }
 </script>

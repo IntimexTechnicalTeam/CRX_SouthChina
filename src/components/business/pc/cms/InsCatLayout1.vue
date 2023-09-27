@@ -222,7 +222,7 @@ export default class InsCatLayout1 extends Vue {
       min-height: calc(100vh - 204px);
       // min-height: 78vh;
       // vertical-align: bottom;
-      display: inline-block;
+      display: block;
       -o-object-fit: cover;
       object-fit: cover;
       -o-object-position: left;
@@ -232,11 +232,11 @@ export default class InsCatLayout1 extends Vue {
   > .NomralBg{
     position: absolute;
     left: 10%;
-    top: 10%;
+    top: 6%;
   }
 }
 .NomralBg {
-  margin-top: 1rem;
+  // margin-top: 1rem;
   .NormalTitle{
     justify-content: left;
     margin-bottom: 45px;
@@ -613,6 +613,11 @@ export default class InsCatLayout1 extends Vue {
         }
       }
     }
+  }
+}
+@media screen and (max-width: 1366px) {
+  .Normalcenter .Detailbanner img{
+    min-height: calc(100vh - 104px);
   }
 }
 </style>

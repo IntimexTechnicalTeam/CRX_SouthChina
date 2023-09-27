@@ -113,17 +113,19 @@ export default class InsModifyPassword extends Vue {
 
 <style lang="less">
 .ModifyPassword {
+  width: 92%;
+  margin: 0 auto;
   margin-bottom: 50px;
   margin-top: 20px;
   .mid-box {
     padding: 0px;
     background: #fff;
-    padding-bottom: 3rem;
+    // padding-bottom: 3rem;
     .InnerBox {
       // border: 1px solid #eee;
       padding: 1.5rem;
       // border-radius: 5px;
-      padding-bottom: 30px;
+      // padding-bottom: 30px;
 
       box-sizing: border-box;
     }
@@ -132,7 +134,8 @@ export default class InsModifyPassword extends Vue {
       display: flex;
       align-items: center;
       justify-content: center;
-      // margin-top: 20px;
+      padding-bottom: 2rem;
+      margin-top: 0;
       .saveBtn {
         width: 10rem;
         display: flex;
